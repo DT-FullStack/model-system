@@ -20,21 +20,3 @@ export class ApiSync<T extends HasId> {
   }
 
 }
-
-export function ApiSyncable<T extends HasId>(rootUrl: string) {
-  return function (constructor: Function) {
-    Object.assign(constructor.prototype, {
-      fetch(id: number): AxiosPromise<T> {
-        return axios.get(`${rootUrl}/${id}`);
-      },
-      save(data: T) {
-        const { id } = data;
-        console.log('Sync!');
-        return id ?
-          axios.put(`${rootUrl}/${id}`, data)
-          : axios.post(rootUrl, data);
-
-      }
-    })
-  }
-}

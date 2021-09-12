@@ -1,14 +1,7 @@
 import { User, UserProps } from '../User';
 import { View } from './View';
+import { Model } from '../Model';
 
-export class Show extends View<User, UserProps>{
-  template(): string {
-    return `
-      <div>
-      <h1>User Details</h1>
-      <div>User Name: ${this.model.get('name')}</div>
-      <div>User Age: ${this.model.get('age')}</div>
-      </div>
-    `;
-  }
+export class Show<T extends Model<K>, K> extends View<T, K>{
+  template = this.model.show;
 }

@@ -1,7 +1,11 @@
+import { Callback, Eventing } from '../Eventing';
 import { Model } from '../Model';
 
+//**  */
+export type DOMEventListener = [eventType: string, selector: string, callback: Callback | null];
 
 export abstract class View<T extends Model<K>, K> {
+  events: Eventing = new Eventing();
   regions: { [key: string]: Element } = {};
 
   constructor(
@@ -12,14 +16,15 @@ export abstract class View<T extends Model<K>, K> {
   }
 
   abstract template(): string;
+  abstract defaultCallback(): void
 
   regionsMap = (): { [key: string]: string } => {
     return {}
   };
 
-  eventsMap = (): {
-    [key: string]: EventListenerOrEventListenerObject
-  } => { return {} }
+  eventsMap = (): DOMEventListener[] => ([])
+  on = this.events.on;
+  trigger = this.events.trigger;
 
   bindModel() {
     this.model.on('change', () => this.render());
@@ -27,10 +32,14 @@ export abstract class View<T extends Model<K>, K> {
 
   bindEvents(fragment: DocumentFragment): void {
     const eventsMap = this.eventsMap();
-    for (let eventKey in eventsMap) {
-      const [event, selector] = eventKey.split(':');
+    for (let DOMEventTuple of eventsMap) {
+      let [eventType, selector, callback] = DOMEventTuple;
       fragment.querySelectorAll(selector)
-        .forEach(element => element.addEventListener(event, eventsMap[eventKey]))
+        .forEach(element => {
+          callback
+            ? element.addEventListener(eventType, callback)
+            : element.addEventListener(eventType, this.defaultCallback)
+        })
     }
   }
 

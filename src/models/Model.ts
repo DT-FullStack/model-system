@@ -1,4 +1,5 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
+import { DOMEventListener } from './views/View';
 
 interface ModelAttributes<T> {
   set(attrs: T): void;
@@ -22,7 +23,15 @@ interface HasId {
   id?: number
 }
 
-export class Model<T extends HasId> {
+export abstract class Model<T extends HasId> {
+  abstract attributeGuard: Required<T>;
+  allowedAttrs(): string[] { return Object.keys(this.attributeGuard) }
+  checkAttrs(update: T): void {
+    const allowedAttrs = this.allowedAttrs();
+    for (let attrName in update) {
+      if (!allowedAttrs.includes(attrName)) delete update[attrName];
+    }
+  }
   constructor(
     private attributes: ModelAttributes<T>,
     private events: Events,
@@ -35,6 +44,7 @@ export class Model<T extends HasId> {
   get = this.attributes.get;
   getAll = this.attributes.getAll;
   set = (update: T): void => {
+    this.checkAttrs(update);
     this.attributes.set(update);
     this.trigger('change');
   }
@@ -54,11 +64,15 @@ export class Model<T extends HasId> {
   save() {
     this.sync.save(this.getAll())
       .then((result: AxiosResponse) => {
+        console.log('save response', { result });
         this.trigger('save');
       }).catch(error => {
         this.trigger('error');
       })
   }
 
+  show = (): string => `Show Model`;
+  form = (): string => `Model Form`;
+  formEvents = (): DOMEventListener[] => ([])
 
 }

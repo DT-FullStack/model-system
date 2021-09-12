@@ -2,8 +2,9 @@ import { View } from './View';
 import { User, UserProps } from '../User';
 import { Show } from './Show';
 import { Form } from './Form';
+import { Model } from '../Model';
 
-export class Edit extends View<User, UserProps>{
+export class Edit<T extends Model<K>, K> extends View<T, K>{
   regionsMap = (): { [key: string]: string } => {
     return {
       show: '.show',
@@ -12,8 +13,8 @@ export class Edit extends View<User, UserProps>{
   }
 
   onRender(): void {
-    new Show(this.regions.show, this.model).render();
-    new Form(this.regions.form, this.model).render();
+    new Show<T, K>(this.regions.show, this.model).render();
+    new Form<T, K>(this.regions.form, this.model).render();
   }
 
   template(): string {

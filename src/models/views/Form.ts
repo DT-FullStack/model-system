@@ -1,45 +1,32 @@
 import { User, UserProps } from '../User';
 import { View } from './View';
+import { Model } from '../Model';
+import { Callback } from '../Eventing';
 
-export class Form extends View<User, UserProps> {
-  template(): string {
-    return `
-    <div id='UserForm'>
-      <input placeholder="${this.model.get('name')}"/>
-      <button class='set-name'>Change Name</button>
-      <button class='set-age'>Set Random Age</button>
-      <button class='save'>Save User</button>
-    </div>
-  `};
-
-  eventsMap = (): {
-    [key: string]: EventListenerOrEventListenerObject
-  } => {
-    return {
-      'click:button': this.onButtonClick,
-      'click:.set-age': this.onSetAgeClick,
-      'click:.set-name': this.onSetNameClick,
-      'click:.save-model': this.onSaveClick,
-    }
-  }
-  onSaveClick = (ev: Event): void => {
-    this.model.save();
-  }
-  onSetAgeClick = (ev: Event): void => {
-    this.model.setRandomAge();
-    console.log('button was clicked');
-  }
-  onSetNameClick = (ev: Event): void => {
-    const input = this.parent.querySelector('input');
-    if (input && input.value) this.model.set({ name: input.value });
-  }
-  onButtonClick(ev: Event): void {
-    ev.stopPropagation();
-    console.log("BUTTTONS");
+export class Form<T extends Model<K>, K> extends View<T, K> {
+  get values() {
+    const form = this.parent.querySelector('form');
+    if (!form) throw new Error('No form found in parent');
+    const entries = Object.fromEntries(new FormData(form));
+    return entries;
   }
 
+  defaultCallback = () => {
+    console.log(this.values);
+    this.updateModel();
+  }
 
+  updateModel(): void {
+    this.model.set(this.values as unknown as K);
+  }
 
+  template = this.model.form;
+
+  eventsMap = this.model.formEvents;
+
+  passInputValue() {
+
+  }
 
   // refreshTemplate(): void{
 
