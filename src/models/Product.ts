@@ -5,62 +5,57 @@ import { ApiSync } from "./ApiSync";
 import { Collection } from './Collection';
 import { DOMEventListener } from "./views/View";
 import { Form } from "./views/Form";
-import { Button, ButtonAction } from './views/layout/Button';
 
-export interface UserProps {
+export interface ProductProps {
   id?: number;
   name?: string;
-  age?: number;
+  type?: 'software' | 'retail merchandise' | 'service' | 'food product' | '';
+  cost?: number;
 }
-// export const User.rootUrl: string = `http://localhost:3000/users`;
+// export const Product.rootUrl: string = `http://localhost:3000/users`;
 
-export class User extends Model<UserProps>{
-  formEle: Form<User, UserProps>;
+export class Product extends Model<ProductProps>{
+  formEle: Form<Product, ProductProps>;
 
   constructor(
-    attributes: ModelAttributes<UserProps>,
+    attributes: ModelAttributes<ProductProps>,
     events: Events,
-    sync: Sync<UserProps>
+    sync: Sync<ProductProps>
   ) {
     super(attributes, events, sync);
     const form = document.getElementById('Form');
     if (!form) throw new Error('#Form not found');
-    this.formEle = new Form<User, UserProps>(form, this);
+    this.formEle = new Form<Product, ProductProps>(form, this);
     this.on('save', () => {
       this.formEle.remove();
     })
   }
 
 
-  attributeGuard: Required<UserProps> = {
-    id: 0, name: '', age: 0
+  attributeGuard: Required<ProductProps> = {
+    id: 0, name: '', type: '', cost: 0
   }
-  type = 'User';
-  pluralType = 'Users';
+  type = 'Product';
+  pluralType = 'Products';
 
-  static get rootUrl() { return `http://localhost:3000/users` }
+  static get rootUrl() { return `http://localhost:3000/products` }
 
-  static initialize(attrs: UserProps): User {
-    const user = new User(
-      new Attributes<UserProps>(attrs),
+  static initialize(attrs: ProductProps): Product {
+    const user = new Product(
+      new Attributes<ProductProps>(attrs),
       new Eventing(),
-      new ApiSync<UserProps>(User.rootUrl)
+      new ApiSync<ProductProps>(Product.rootUrl)
     )
     user.checkAttrs(attrs);
     user.set(attrs);
     return user;
   }
-  static initializeCollection(): Collection<User, UserProps> {
-    return new Collection<User, UserProps>(
-      'User', 'Users',
-      User.rootUrl,
-      (json: UserProps) => User.initialize(json),
+  static initializeCollection(): Collection<Product, ProductProps> {
+    return new Collection<Product, ProductProps>(
+      'Product', 'Products',
+      Product.rootUrl,
+      (json: ProductProps) => Product.initialize(json),
     )
-  }
-
-  setRandomAge(): void {
-    const age = Math.round(Math.random() * 100);
-    this.set({ age });
   }
 
   show = (): string => {
@@ -70,7 +65,8 @@ export class User extends Model<UserProps>{
           <a class='ui right floated icon edit'><i class='edit icon'></i></a>
           
           <h1 class='header'>${this.get('name')}</h1>
-          <div>Age: ${this.get('age')}</div>
+          <div>Type: ${this.get('type')}</div>
+          <div>Cost: ${this.get('cost')}</div>
         </div>
       `
   }
@@ -85,7 +81,7 @@ export class User extends Model<UserProps>{
     this.formEle.render();
     const cards = document.querySelectorAll('.user-card');
     cards.forEach(card => card.className = card.className.split(' ').filter(str => str != 'red').join(' '));
-    const card = document.getElementById(`User${this.get('id')}`);
+    const card = document.getElementById(`Product${this.get('id')}`);
     console.log(this.get('id'), card);
     if (card) card.className += ' red';
   }
@@ -98,20 +94,29 @@ export class User extends Model<UserProps>{
   form = (): string => {
     return `
     <div>
-      <div class='ui header large'>User Details</div>
-      <form id='UserForm' class='ui form'>
+      <div class='ui header large'>Product Details</div>
+      <form id='ProductForm' class='ui form'>
         <div class='field'>
           <label>Name</label>
-          <input name='name' type='text' placeholder="Your Name" value="${this.get('name') || ''}"/>
+          <input name='name' type='text' placeholder="Product Name" value="${this.get('name') || ''}"/>
         </div>
         <div class='field'>
-          <label>Age</label>
-          <input name='age' type='number' placeholder="Age" value="${this.get('age')}"/>
+          <label>Product Type</label>
+          ${['software', 'retail merchandise', 'service', 'food product'].map(t => `
+            <div class='ui radio checkbox'>
+              <input name='type' type='radio' placeholder="Type" value="${t}" ${this.get('type') === t && 'checked'}/>
+              <label for='type'>${t}</label>
+            </div>
+          `).join('')}
+        </div>
+        <div class='field'>
+          <label>Cost</label>
+          <input name='cost' type='number' placeholder="Cost" value="${this.get('cost') || ''}"/>
         </div>
       </form>
       <div class='ui basic segment'>
         <div class='ui buttons'>
-          <button class='ui button green save'>Save User</button>
+          <button class='ui button green save'>Save Product</button>
           <button class='ui button  cancel'>Cancel</button>
         </div>
       </div>
@@ -123,8 +128,5 @@ export class User extends Model<UserProps>{
       ['click', '.cancel', this.cancelEdit]
 
     ];
-  }
-  onSetAgeClick = (): void => {
-    this.setRandomAge();
   }
 }

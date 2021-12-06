@@ -1,20 +1,22 @@
 import { AxiosPromise, AxiosResponse } from 'axios';
-import { DOMEventListener } from './views/View';
+import { DOMEventListener, View } from './views/View';
+import { Form } from './views/Form';
 
-interface ModelAttributes<T> {
+export interface ModelAttributes<T> {
   set(attrs: T): void;
   getAll(): T;
   get<K extends keyof T>(key: K): T[K];
 }
 
-interface Sync<T> {
+export interface Sync<T> {
   fetch(id: number): AxiosPromise;
   save(data: T): AxiosPromise;
+  delete(id: number): AxiosPromise;
 }
 
 type Callback = () => void;
 
-interface Events {
+export interface Events {
   on(eventName: string, callback: Callback): void;
   trigger(eventName: string): void;
 }
@@ -25,6 +27,10 @@ interface HasId {
 
 export abstract class Model<T extends HasId> {
   abstract attributeGuard: Required<T>;
+  abstract type: string;
+  abstract pluralType: string;
+  // abstract formEle: 
+
   allowedAttrs(): string[] { return Object.keys(this.attributeGuard) }
   checkAttrs(update: T): void {
     const allowedAttrs = this.allowedAttrs();
@@ -36,7 +42,9 @@ export abstract class Model<T extends HasId> {
     private attributes: ModelAttributes<T>,
     private events: Events,
     private sync: Sync<T>
-  ) { }
+  ) {
+
+  }
 
 
   on = this.events.on;
@@ -61,18 +69,31 @@ export abstract class Model<T extends HasId> {
       console.log(error);
     }
   }
-  save() {
+  save = () => {
     this.sync.save(this.getAll())
       .then((result: AxiosResponse) => {
         console.log('save response', { result });
+        if (!this.get('id')) {
+          const { id } = result.data;
+          this.set({ id } as T);
+        }
         this.trigger('save');
       }).catch(error => {
         this.trigger('error');
       })
   }
+  delete = () => {
+    this.sync.delete(Number(this.get('id')))
+      .then((result: AxiosResponse) => {
+        console.log('delete response', { result });
+        this.trigger('delete');
+      }).catch(error => { this.trigger('error') })
+  }
 
   show = (): string => `Show Model`;
   form = (): string => `Model Form`;
-  formEvents = (): DOMEventListener[] => ([])
 
+  abstract edit(): void;
+  abstract formEvents(): DOMEventListener[];
+  abstract showEvents(): DOMEventListener[];
 }

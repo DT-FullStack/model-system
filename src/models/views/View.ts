@@ -17,6 +17,7 @@ export abstract class View<T extends Model<K>, K> {
 
   abstract template(): string;
   abstract defaultCallback(): void
+  abstract onCreation(): void;
 
   regionsMap = (): { [key: string]: string } => {
     return {}
@@ -27,7 +28,7 @@ export abstract class View<T extends Model<K>, K> {
   trigger = this.events.trigger;
 
   bindModel() {
-    this.model.on('change', () => this.render());
+    this.model.on('save', () => this.render());
   }
 
   bindEvents(fragment: DocumentFragment): void {
@@ -67,8 +68,15 @@ export abstract class View<T extends Model<K>, K> {
 
     this.onRender();
 
-
     this.parent.append(this.content = templateElement.content);
   }
 
+  remove = (): void => {
+    this.parent.innerHTML = "";
+    if (this.content) this.content.replaceChildren('');
+  }
+
+  // hide(): void{
+  //   this.parent.childNodes.forEach(child => child.hide())
+  // }
 }

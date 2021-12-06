@@ -5,62 +5,57 @@ import { ApiSync } from "./ApiSync";
 import { Collection } from './Collection';
 import { DOMEventListener } from "./views/View";
 import { Form } from "./views/Form";
-import { Button, ButtonAction } from './views/layout/Button';
 
-export interface UserProps {
+export interface CompanyProps {
   id?: number;
   name?: string;
-  age?: number;
+  location?: string;
+  mission?: string;
 }
-// export const User.rootUrl: string = `http://localhost:3000/users`;
+// export const Company.rootUrl: string = `http://localhost:3000/users`;
 
-export class User extends Model<UserProps>{
-  formEle: Form<User, UserProps>;
+export class Company extends Model<CompanyProps>{
+  formEle: Form<Company, CompanyProps>;
 
   constructor(
-    attributes: ModelAttributes<UserProps>,
+    attributes: ModelAttributes<CompanyProps>,
     events: Events,
-    sync: Sync<UserProps>
+    sync: Sync<CompanyProps>
   ) {
     super(attributes, events, sync);
     const form = document.getElementById('Form');
     if (!form) throw new Error('#Form not found');
-    this.formEle = new Form<User, UserProps>(form, this);
+    this.formEle = new Form<Company, CompanyProps>(form, this);
     this.on('save', () => {
       this.formEle.remove();
     })
   }
 
 
-  attributeGuard: Required<UserProps> = {
-    id: 0, name: '', age: 0
+  attributeGuard: Required<CompanyProps> = {
+    id: 0, name: '', location: '', mission: ''
   }
-  type = 'User';
-  pluralType = 'Users';
+  type = 'Company';
+  pluralType = 'Companies';
 
-  static get rootUrl() { return `http://localhost:3000/users` }
+  static get rootUrl() { return `http://localhost:3000/companies` }
 
-  static initialize(attrs: UserProps): User {
-    const user = new User(
-      new Attributes<UserProps>(attrs),
+  static initialize(attrs: CompanyProps): Company {
+    const user = new Company(
+      new Attributes<CompanyProps>(attrs),
       new Eventing(),
-      new ApiSync<UserProps>(User.rootUrl)
+      new ApiSync<CompanyProps>(Company.rootUrl)
     )
     user.checkAttrs(attrs);
     user.set(attrs);
     return user;
   }
-  static initializeCollection(): Collection<User, UserProps> {
-    return new Collection<User, UserProps>(
-      'User', 'Users',
-      User.rootUrl,
-      (json: UserProps) => User.initialize(json),
+  static initializeCollection(): Collection<Company, CompanyProps> {
+    return new Collection<Company, CompanyProps>(
+      'Company', 'Companies',
+      Company.rootUrl,
+      (json: CompanyProps) => Company.initialize(json),
     )
-  }
-
-  setRandomAge(): void {
-    const age = Math.round(Math.random() * 100);
-    this.set({ age });
   }
 
   show = (): string => {
@@ -70,7 +65,8 @@ export class User extends Model<UserProps>{
           <a class='ui right floated icon edit'><i class='edit icon'></i></a>
           
           <h1 class='header'>${this.get('name')}</h1>
-          <div>Age: ${this.get('age')}</div>
+          <div>Location: ${this.get('location')}</div>
+          <div>Mission: ${this.get('mission')}</div>
         </div>
       `
   }
@@ -85,7 +81,7 @@ export class User extends Model<UserProps>{
     this.formEle.render();
     const cards = document.querySelectorAll('.user-card');
     cards.forEach(card => card.className = card.className.split(' ').filter(str => str != 'red').join(' '));
-    const card = document.getElementById(`User${this.get('id')}`);
+    const card = document.getElementById(`Company${this.get('id')}`);
     console.log(this.get('id'), card);
     if (card) card.className += ' red';
   }
@@ -98,20 +94,24 @@ export class User extends Model<UserProps>{
   form = (): string => {
     return `
     <div>
-      <div class='ui header large'>User Details</div>
-      <form id='UserForm' class='ui form'>
+      <div class='ui header large'>Company Details</div>
+      <form id='CompanyForm' class='ui form'>
         <div class='field'>
           <label>Name</label>
           <input name='name' type='text' placeholder="Your Name" value="${this.get('name') || ''}"/>
         </div>
         <div class='field'>
-          <label>Age</label>
-          <input name='age' type='number' placeholder="Age" value="${this.get('age')}"/>
+          <label>Location</label>
+          <input name='location' type='text' placeholder="Location" value="${this.get('location') || ''}"/>
+        </div>
+        <div class='field'>
+          <label>Mission</label>
+          <input name='mission' type='text' placeholder="Mission" value="${this.get('mission') || ''}"/>
         </div>
       </form>
       <div class='ui basic segment'>
         <div class='ui buttons'>
-          <button class='ui button green save'>Save User</button>
+          <button class='ui button green save'>Save Company</button>
           <button class='ui button  cancel'>Cancel</button>
         </div>
       </div>
@@ -123,8 +123,5 @@ export class User extends Model<UserProps>{
       ['click', '.cancel', this.cancelEdit]
 
     ];
-  }
-  onSetAgeClick = (): void => {
-    this.setRandomAge();
   }
 }

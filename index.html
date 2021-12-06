@@ -1,15 +1,25 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    />
     <title>Home Page</title>
   </head>
   <body>
-    <div id="root">
-      <h1>Hey O!</h1>
-      <div id="main-content"></div>
+    <div id="root" class="ui container">
+      <h1 class="ui basic segment header">Model System</h1>
+      <div id="main-content">
+        <div id="Menu" class="ui secondary pointing menu"></div>
+        <div id="Collection" class="ui basic segment"></div>
+        <div id="Form" class="ui basic segment"></div>
+      </div>
     </div>
     <footer>
       <script type="module" src="./src/index.ts"></script>

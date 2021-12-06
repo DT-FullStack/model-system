@@ -1,48 +1,38 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "EHIOSHIOFOIJ",
-      "age": 4390
+      "name": "asdgas",
+      "age": "",
+      "id": 1
+    }
+  ],
+  "companies": [
+    {
+      "name": "Apples and Bananas Inc",
+      "location": "Austin, TX",
+      "mission": "To bring fruit to the people",
+      "id": 1
+    }
+  ],
+  "products": [
+    {
+      "name": "asfs",
+      "type": "retail merchandise",
+      "cost": "55",
+      "id": 1
     },
     {
-      "name": "henry",
+      "name": "",
+      "type": "service",
+      "cost": "",
       "id": 2
-    },
+    }
+  ],
+  "issues": [
     {
-      "name": "henry",
-      "id": 3
-    },
-    {
-      "name": "henry",
-      "id": 4
-    },
-    {
-      "name": "henry",
-      "id": 5
-    },
-    {
-      "name": "henry",
-      "id": 6
-    },
-    {
-      "name": "henry",
-      "id": 7
-    },
-    {
-      "name": "David",
-      "age": 55,
-      "id": 8
-    },
-    {
-      "name": "David",
-      "age": 55,
-      "id": 9
-    },
-    {
-      "name": "Davidasfs",
-      "age": 55,
-      "id": 10
+      "title": "System malfunction",
+      "description": "It went down hard",
+      "id": 1
     }
   ]
 }
