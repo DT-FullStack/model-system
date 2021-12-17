@@ -1,4 +1,4 @@
-import { Events, Model, ModelAttributes, Sync } from "./Model";
+import { Events, Model, ModelAttributes, RequiredAttrs, Sync } from "./Model";
 import { Attributes } from './Attributes';
 import { Eventing } from "./Eventing";
 import { ApiSync } from "./ApiSync";
@@ -35,6 +35,10 @@ export class Company extends Model<CompanyProps>{
   attributeGuard: Required<CompanyProps> = {
     id: 0, name: '', location: '', mission: ''
   }
+  attributeRequire: RequiredAttrs<CompanyProps> = {
+    name: true, location: true
+  }
+
   type = 'Company';
   pluralType = 'Companies';
 
@@ -46,7 +50,7 @@ export class Company extends Model<CompanyProps>{
       new Eventing(),
       new ApiSync<CompanyProps>(Company.rootUrl)
     )
-    user.checkAttrs(attrs);
+    user.guardAttrs(attrs);
     user.set(attrs);
     return user;
   }
@@ -98,7 +102,7 @@ export class Company extends Model<CompanyProps>{
       <form id='CompanyForm' class='ui form'>
         <div class='field'>
           <label>Name</label>
-          <input name='name' type='text' placeholder="Your Name" value="${this.get('name') || ''}"/>
+          <input name='name' type='text' placeholder="Company Name" value="${this.get('name') || ''}"/>
         </div>
         <div class='field'>
           <label>Location</label>

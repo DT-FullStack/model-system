@@ -1,4 +1,4 @@
-import { Events, Model, ModelAttributes, Sync } from "./Model";
+import { Events, Model, ModelAttributes, RequiredAttrs, Sync } from "./Model";
 import { Attributes } from './Attributes';
 import { Eventing } from "./Eventing";
 import { ApiSync } from "./ApiSync";
@@ -36,6 +36,11 @@ export class Issue extends Model<IssueProps>{
   attributeGuard: Required<IssueProps> = {
     id: 0, title: '', description: '', resolved: false
   }
+  attributeRequire: RequiredAttrs<IssueProps> = {
+    title: true, description: true
+  }
+
+
   type = 'Issue';
   pluralType = 'Issues';
 
@@ -47,7 +52,7 @@ export class Issue extends Model<IssueProps>{
       new Eventing(),
       new ApiSync<IssueProps>(Issue.rootUrl)
     )
-    issue.checkAttrs(attrs);
+    issue.guardAttrs(attrs);
     issue.set(attrs);
     return issue;
   }
@@ -108,7 +113,7 @@ export class Issue extends Model<IssueProps>{
         <div class='field'>
           <label>Status</label>
           <div class='ui checkbox'>
-            <input name='resolved' type='checkbox' placeholder="Description" value="true" ${this.get('resolved') && 'checked'}/>
+            <input name='resolved' type='checkbox' value="true" ${this.get('resolved') && 'checked'}/>
             <label>resolved</label>
           </div>
           

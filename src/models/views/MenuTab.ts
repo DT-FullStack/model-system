@@ -1,3 +1,5 @@
+import { Form } from "./Form";
+
 type Callback = () => void;
 
 export class MenuTab {
@@ -13,10 +15,13 @@ export class MenuTab {
   get active() { return }
 
   onClick = (): void => {
-    this.action();
     if (!this.menu) return;
-    this.menu.querySelectorAll('.item').forEach(i => i.className = i.className.split(' ').filter(n => n != 'active').join(' '));
     const tab = this.menu.querySelector(`#${this.name}`)
+    if (!tab || tab.className.includes('active')) return;
+    // if () return;
+    Form.removeForm();
+    this.action();
+    this.menu.querySelectorAll('.item').forEach(i => i.className = i.className.split(' ').filter(n => n != 'active').join(' '));
     if (tab) tab.className += ' active';
   }
 

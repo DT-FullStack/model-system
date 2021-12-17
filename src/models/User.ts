@@ -1,4 +1,4 @@
-import { Events, Model, ModelAttributes, Sync } from "./Model";
+import { Events, Model, ModelAttributes, RequiredAttrs, Sync } from "./Model";
 import { Attributes } from './Attributes';
 import { Eventing } from "./Eventing";
 import { ApiSync } from "./ApiSync";
@@ -35,6 +35,10 @@ export class User extends Model<UserProps>{
   attributeGuard: Required<UserProps> = {
     id: 0, name: '', age: 0
   }
+  attributeRequire: RequiredAttrs<UserProps> = {
+    age: true, name: true,
+  }
+
   type = 'User';
   pluralType = 'Users';
 
@@ -46,7 +50,7 @@ export class User extends Model<UserProps>{
       new Eventing(),
       new ApiSync<UserProps>(User.rootUrl)
     )
-    user.checkAttrs(attrs);
+    user.guardAttrs(attrs);
     user.set(attrs);
     return user;
   }
@@ -99,12 +103,12 @@ export class User extends Model<UserProps>{
     return `
     <div>
       <div class='ui header large'>User Details</div>
-      <form id='UserForm' class='ui form'>
+      <form id='UserForm' class='ui equal width form'>
         <div class='field'>
           <label>Name</label>
-          <input name='name' type='text' placeholder="Your Name" value="${this.get('name') || ''}"/>
+          <input name='name' type='text' placeholder="User Name" value="${this.get('name') || ''}"/>
         </div>
-        <div class='field'>
+        <div class='four wide field'>
           <label>Age</label>
           <input name='age' type='number' placeholder="Age" value="${this.get('age')}"/>
         </div>

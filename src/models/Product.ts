@@ -1,4 +1,4 @@
-import { Events, Model, ModelAttributes, Sync } from "./Model";
+import { Events, Model, ModelAttributes, RequiredAttrs, Sync } from "./Model";
 import { Attributes } from './Attributes';
 import { Eventing } from "./Eventing";
 import { ApiSync } from "./ApiSync";
@@ -35,6 +35,12 @@ export class Product extends Model<ProductProps>{
   attributeGuard: Required<ProductProps> = {
     id: 0, name: '', type: '', cost: 0
   }
+  attributeRequire: RequiredAttrs<ProductProps> = {
+    name: true, cost: true
+  }
+  // requiredAttrs: { id?: boolean | undefined; name?: boolean | undefined; type?: boolean | undefined; cost?: boolean | undefined; } = {
+  //   name: true, cost: true
+  // }
   type = 'Product';
   pluralType = 'Products';
 
@@ -46,7 +52,7 @@ export class Product extends Model<ProductProps>{
       new Eventing(),
       new ApiSync<ProductProps>(Product.rootUrl)
     )
-    user.checkAttrs(attrs);
+    user.guardAttrs(attrs);
     user.set(attrs);
     return user;
   }

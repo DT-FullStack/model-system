@@ -1,38 +1,51 @@
 {
   "users": [
     {
-      "name": "asdgas",
-      "age": "",
-      "id": 1
+      "name": "David",
+      "age": "50",
+      "id": 2
     }
   ],
   "companies": [
     {
+      "name": "Imports R Us",
+      "location": "Austin, TX",
+      "mission": "We want to bring it ",
+      "id": 2
+    },
+    {
       "name": "Apples and Bananas Inc",
       "location": "Austin, TX",
-      "mission": "To bring fruit to the people",
-      "id": 1
+      "mission": "Bringing fruit to the people",
+      "id": 3
     }
   ],
   "products": [
     {
-      "name": "asfs",
-      "type": "retail merchandise",
-      "cost": "55",
+      "name": "Point of Service",
+      "cost": "500",
+      "type": "software",
       "id": 1
     },
     {
-      "name": "",
+      "name": "Logo Design",
+      "cost": "1000",
       "type": "service",
-      "cost": "",
       "id": 2
+    },
+    {
+      "name": "Hot Cakes",
+      "cost": "4.99",
+      "type": "food product",
+      "id": 3
     }
   ],
   "issues": [
     {
       "title": "System malfunction",
       "description": "It went down hard",
-      "id": 1
+      "id": 1,
+      "resolved": "true"
     }
   ]
 }

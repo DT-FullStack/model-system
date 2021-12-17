@@ -3,6 +3,7 @@ import { Model } from '../Model';
 
 //**  */
 export type DOMEventListener = [eventType: string, selector: string, callback: Callback | null];
+export type NodeIterator = (ele: Element) => void;
 
 export abstract class View<T extends Model<K>, K> {
   events: Eventing = new Eventing();
@@ -17,7 +18,8 @@ export abstract class View<T extends Model<K>, K> {
 
   abstract template(): string;
   abstract defaultCallback(): void
-  abstract onCreation(): void;
+
+  onCreation = (): void => { }
 
   regionsMap = (): { [key: string]: string } => {
     return {}
@@ -76,7 +78,15 @@ export abstract class View<T extends Model<K>, K> {
     if (this.content) this.content.replaceChildren('');
   }
 
-  // hide(): void{
-  //   this.parent.childNodes.forEach(child => child.hide())
-  // }
+  addClass = (name: string): NodeIterator => {
+    return (ele: Element) => {
+      ele.className = ele.className += ` ${name}`;
+    }
+  }
+  removeClass = (name: string): NodeIterator => {
+    return (ele: Element) => {
+      ele.className = ele.className.split(' ').filter(c => c !== name).join(' ');
+    }
+  }
+
 }

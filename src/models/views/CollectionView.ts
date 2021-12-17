@@ -44,6 +44,12 @@ export abstract class CollectionView<T extends Model<K>, K> {
       collectionElement.append(itemParent);
     }
 
+    if (!this.collection.models.length) {
+      const noItems = document.createElement('h2');
+      noItems.textContent = `No ${this.collection.collectionName}`;
+      collectionElement.append(noItems)
+    }
+
     this.parent.append(templateElement.content);
   }
 
