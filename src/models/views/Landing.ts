@@ -16,7 +16,7 @@ export class Landing {
       description: ['An ExpressJS package that creates a server with RESTful routing for any collection stored in the designated JSON file']
     },
     {
-      header: 'No Fancy JS Frameworks',
+      header: 'Zero JavaScript Frameworks',
       meta: 'Basic TypeScript only',
       description: [`Doesn't rely on React or Angular, simply renders templates directly in the DOM`]
     }
@@ -28,7 +28,7 @@ export class Landing {
     <div class='ui basic segment'>
       <div class='ui cards'>
         ${this.details.map(detail => `
-          <div class='ui card'>
+          <div class='ui blue card'>
             <div class='content'>
               <div class='header'>${detail.header}</div>
               ${detail.meta && `<div class='meta'>${detail.meta}</div>`}

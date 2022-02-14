@@ -42,7 +42,7 @@ export class Company extends Model<CompanyProps>{
   type = 'Company';
   pluralType = 'Companies';
 
-  static get rootUrl() { return `/companies` }
+  static get rootUrl() { return `https://model-system.herokuapp.com:3000/companies` }
 
   static initialize(attrs: CompanyProps): Company {
     const user = new Company(

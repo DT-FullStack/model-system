@@ -38,13 +38,11 @@ export class Product extends Model<ProductProps>{
   attributeRequire: RequiredAttrs<ProductProps> = {
     name: true, cost: true
   }
-  // requiredAttrs: { id?: boolean | undefined; name?: boolean | undefined; type?: boolean | undefined; cost?: boolean | undefined; } = {
-  //   name: true, cost: true
-  // }
+
   type = 'Product';
   pluralType = 'Products';
 
-  static get rootUrl() { return `/products` }
+  static get rootUrl() { return `https://model-system.herokuapp.com:3000/products` }
 
   static initialize(attrs: ProductProps): Product {
     const user = new Product(

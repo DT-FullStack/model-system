@@ -42,7 +42,7 @@ export class User extends Model<UserProps>{
   type = 'User';
   pluralType = 'Users';
 
-  static get rootUrl() { return `/users` }
+  static get rootUrl() { return `https://model-system.herokuapp.com:3000/users` }
 
   static initialize(attrs: UserProps): User {
     const user = new User(

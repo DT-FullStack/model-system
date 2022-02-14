@@ -1,3 +1,7 @@
 .ui.cards > h2 {
   margin: 1rem
 }
+
+#root{
+  margin-top: 1rem;
+}
