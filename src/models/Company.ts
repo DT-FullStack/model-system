@@ -12,7 +12,7 @@ export interface CompanyProps {
   location?: string;
   mission?: string;
 }
-// export const Company.rootUrl: string = `http://localhost:3000/users`;
+// export const Company.rootUrl: string = `/users`;
 
 export class Company extends Model<CompanyProps>{
   formEle: Form<Company, CompanyProps>;
@@ -42,7 +42,7 @@ export class Company extends Model<CompanyProps>{
   type = 'Company';
   pluralType = 'Companies';
 
-  static get rootUrl() { return `http://localhost:3000/companies` }
+  static get rootUrl() { return `/companies` }
 
   static initialize(attrs: CompanyProps): Company {
     const user = new Company(

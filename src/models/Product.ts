@@ -12,7 +12,7 @@ export interface ProductProps {
   type?: 'software' | 'retail merchandise' | 'service' | 'food product' | '';
   cost?: number;
 }
-// export const Product.rootUrl: string = `http://localhost:3000/users`;
+// export const Product.rootUrl: string = `/users`;
 
 export class Product extends Model<ProductProps>{
   formEle: Form<Product, ProductProps>;
@@ -44,7 +44,7 @@ export class Product extends Model<ProductProps>{
   type = 'Product';
   pluralType = 'Products';
 
-  static get rootUrl() { return `http://localhost:3000/products` }
+  static get rootUrl() { return `/products` }
 
   static initialize(attrs: ProductProps): Product {
     const user = new Product(

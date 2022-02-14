@@ -13,7 +13,7 @@ export interface IssueProps {
   description?: string;
   resolved?: boolean;
 }
-// export const Issue.rootUrl: string = `http://localhost:3000/issues`;
+// export const Issue.rootUrl: string = `/issues`;
 
 export class Issue extends Model<IssueProps>{
   formEle: Form<Issue, IssueProps>;
@@ -44,7 +44,7 @@ export class Issue extends Model<IssueProps>{
   type = 'Issue';
   pluralType = 'Issues';
 
-  static get rootUrl() { return `http://localhost:3000/issues` }
+  static get rootUrl() { return `/issues` }
 
   static initialize(attrs: IssueProps): Issue {
     const issue = new Issue(
