@@ -44,7 +44,7 @@ export class Issue extends Model<IssueProps>{
   type = 'Issue';
   pluralType = 'Issues';
 
-  static get rootUrl() { return `https://model-system.herokuapp.com:3000/issues` }
+  static get rootUrl() { return `/issues` }
 
   static initialize(attrs: IssueProps): Issue {
     const issue = new Issue(

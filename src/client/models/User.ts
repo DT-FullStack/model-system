@@ -12,7 +12,6 @@ export interface UserProps {
   name?: string;
   age?: number;
 }
-// export const User.rootUrl: string = `/users`;
 
 export class User extends Model<UserProps>{
   formEle: Form<User, UserProps>;
@@ -42,7 +41,7 @@ export class User extends Model<UserProps>{
   type = 'User';
   pluralType = 'Users';
 
-  static get rootUrl() { return `https://model-system.herokuapp.com:3000/users` }
+  static get rootUrl() { return `/users` }
 
   static initialize(attrs: UserProps): User {
     const user = new User(

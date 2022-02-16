@@ -6,59 +6,59 @@ import { Collection } from './Collection';
 import { DOMEventListener } from "./views/View";
 import { Form } from "./views/Form";
 
-export interface ProductProps {
+export interface CompanyProps {
   id?: number;
   name?: string;
-  type?: 'software' | 'retail merchandise' | 'service' | 'food product' | '';
-  cost?: number;
+  location?: string;
+  mission?: string;
 }
-// export const Product.rootUrl: string = `/users`;
+// export const Company.rootUrl: string = `/users`;
 
-export class Product extends Model<ProductProps>{
-  formEle: Form<Product, ProductProps>;
+export class Company extends Model<CompanyProps>{
+  formEle: Form<Company, CompanyProps>;
 
   constructor(
-    attributes: ModelAttributes<ProductProps>,
+    attributes: ModelAttributes<CompanyProps>,
     events: Events,
-    sync: Sync<ProductProps>
+    sync: Sync<CompanyProps>
   ) {
     super(attributes, events, sync);
     const form = document.getElementById('Form');
     if (!form) throw new Error('#Form not found');
-    this.formEle = new Form<Product, ProductProps>(form, this);
+    this.formEle = new Form<Company, CompanyProps>(form, this);
     this.on('save', () => {
       this.formEle.remove();
     })
   }
 
 
-  attributeGuard: Required<ProductProps> = {
-    id: 0, name: '', type: '', cost: 0
+  attributeGuard: Required<CompanyProps> = {
+    id: 0, name: '', location: '', mission: ''
   }
-  attributeRequire: RequiredAttrs<ProductProps> = {
-    name: true, cost: true
+  attributeRequire: RequiredAttrs<CompanyProps> = {
+    name: true, location: true
   }
 
-  type = 'Product';
-  pluralType = 'Products';
+  type = 'Company';
+  pluralType = 'Companies';
 
-  static get rootUrl() { return `https://model-system.herokuapp.com:3000/products` }
+  static get rootUrl() { return `/companies` }
 
-  static initialize(attrs: ProductProps): Product {
-    const user = new Product(
-      new Attributes<ProductProps>(attrs),
+  static initialize(attrs: CompanyProps): Company {
+    const user = new Company(
+      new Attributes<CompanyProps>(attrs),
       new Eventing(),
-      new ApiSync<ProductProps>(Product.rootUrl)
+      new ApiSync<CompanyProps>(Company.rootUrl)
     )
     user.guardAttrs(attrs);
     user.set(attrs);
     return user;
   }
-  static initializeCollection(): Collection<Product, ProductProps> {
-    return new Collection<Product, ProductProps>(
-      'Product', 'Products',
-      Product.rootUrl,
-      (json: ProductProps) => Product.initialize(json),
+  static initializeCollection(): Collection<Company, CompanyProps> {
+    return new Collection<Company, CompanyProps>(
+      'Company', 'Companies',
+      Company.rootUrl,
+      (json: CompanyProps) => Company.initialize(json),
     )
   }
 
@@ -69,8 +69,8 @@ export class Product extends Model<ProductProps>{
           <a class='ui right floated icon edit'><i class='edit icon'></i></a>
           
           <h1 class='header'>${this.get('name')}</h1>
-          <div>Type: ${this.get('type')}</div>
-          <div>Cost: ${this.get('cost')}</div>
+          <div>Location: ${this.get('location')}</div>
+          <div>Mission: ${this.get('mission')}</div>
         </div>
       `
   }
@@ -85,7 +85,7 @@ export class Product extends Model<ProductProps>{
     this.formEle.render();
     const cards = document.querySelectorAll('.user-card');
     cards.forEach(card => card.className = card.className.split(' ').filter(str => str != 'red').join(' '));
-    const card = document.getElementById(`Product${this.get('id')}`);
+    const card = document.getElementById(`Company${this.get('id')}`);
     console.log(this.get('id'), card);
     if (card) card.className += ' red';
   }
@@ -98,29 +98,24 @@ export class Product extends Model<ProductProps>{
   form = (): string => {
     return `
     <div>
-      <div class='ui header large'>Product Details</div>
-      <form id='ProductForm' class='ui form'>
+      <div class='ui header large'>Company Details</div>
+      <form id='CompanyForm' class='ui form'>
         <div class='field'>
           <label>Name</label>
-          <input name='name' type='text' placeholder="Product Name" value="${this.get('name') || ''}"/>
+          <input name='name' type='text' placeholder="Company Name" value="${this.get('name') || ''}"/>
         </div>
         <div class='field'>
-          <label>Product Type</label>
-          ${['software', 'retail merchandise', 'service', 'food product'].map(t => `
-            <div class='ui radio checkbox'>
-              <input name='type' type='radio' placeholder="Type" value="${t}" ${this.get('type') === t && 'checked'}/>
-              <label for='type'>${t}</label>
-            </div>
-          `).join('')}
+          <label>Location</label>
+          <input name='location' type='text' placeholder="Location" value="${this.get('location') || ''}"/>
         </div>
         <div class='field'>
-          <label>Cost</label>
-          <input name='cost' type='number' placeholder="Cost" value="${this.get('cost') || ''}"/>
+          <label>Mission</label>
+          <input name='mission' type='text' placeholder="Mission" value="${this.get('mission') || ''}"/>
         </div>
       </form>
       <div class='ui basic segment'>
         <div class='ui buttons'>
-          <button class='ui button green save'>Save Product</button>
+          <button class='ui button green save'>Save Company</button>
           <button class='ui button  cancel'>Cancel</button>
         </div>
       </div>

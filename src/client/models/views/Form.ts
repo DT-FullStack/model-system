@@ -30,6 +30,7 @@ export class Form<T extends Model<K>, K> extends View<T, K> {
   get values(): K {
     const form = this.parent.querySelector('form');
     if (!form) throw new Error('No form found in parent');
+    // @ts-ignore
     const entries = Object.fromEntries(new FormData(form));
 
     return entries as unknown as K;
