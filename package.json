@@ -4,13 +4,9 @@
   "description": "Collections",
   "main": "server.js",
   "private": true,
-  "targets": {
-    "default": {
-      "context": "node",
-      "engines": {
-        "node": "10"
-      }
-    }
+  "engines": {
+    "node": "14.19.0",
+    "npm": "6.14.16"
   },
   "scripts": {
     "watch": "npx webpack --watch",
