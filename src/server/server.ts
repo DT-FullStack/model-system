@@ -7,6 +7,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import JsonDatabase from './api/JsonDatabase';
+import { env } from 'process';
 
 // create an instance of express to serve our end points
 const app = express();
@@ -26,7 +27,7 @@ app.get('/', (req, res) => {
 JsonDatabase('db.json', app);
 
 // const port = process.env.PORT || 80;
-const port = () => process.env.PORT;
+const port = () => env.PORT;
 
 new Promise((resolve) => {
   const waitingForPort = setInterval(() => {
@@ -34,7 +35,8 @@ new Promise((resolve) => {
       clearInterval(waitingForPort);
       resolve(port());
     }
-  }, 100)
+    console.log(env)
+  }, 1000 * 5)
 }).then(port => {
   app.listen(port, () => console.log(`Listening on port ${port}`));
 
