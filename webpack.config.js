@@ -1,5 +1,13 @@
 const path = require('path');
 const nodePolyfill = require('node-polyfill-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+
+// For inclusion in any Node.js webpack config
+const nodeOptions = {
+  target: 'node',
+  plugins: [new nodePolyfill()],
+  externals: [nodeExternals()],
+};
 
 const clientConfig = {
   entry: "./src/client/index.ts",
@@ -20,21 +28,22 @@ const clientConfig = {
 }
 
 const serverConfig = {
+  ...nodeOptions,
   entry: "./src/server/server.ts",
-  target: 'node',
   output: {
     filename: 'server.js',
     path: __dirname
   },
   mode: "development",
-  plugins: [new nodePolyfill()],
+  // plugins: [new nodePolyfill()],
+  // externals: [nodeExternals()],
   module: {
     rules: [
       { test: /\.ts$/, use: 'ts-loader' }
     ]
   },
   resolve: {
-    extensions: ['.js', '.ts', '.json']
+    extensions: ['.js', '.ts']
   }
 }
 

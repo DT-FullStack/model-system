@@ -83,7 +83,7 @@ export class Company extends Model<CompanyProps>{
 
   edit = () => {
     this.formEle.render();
-    const cards = document.querySelectorAll('.user-card');
+    const cards = document.querySelectorAll('.company-card');
     cards.forEach(card => card.className = card.className.split(' ').filter(str => str != 'red').join(' '));
     const card = document.getElementById(`Company${this.get('id')}`);
     console.log(this.get('id'), card);

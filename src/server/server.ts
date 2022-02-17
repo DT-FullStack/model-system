@@ -6,6 +6,8 @@ import express from 'express';
 // const path = require('path');
 import bodyParser from 'body-parser';
 import path from 'path';
+import JsonDatabase from './api/JsonDatabase';
+// import JsonDatabaseRouter from './api/JsonDatabaseRoutes';
 
 // create an instance of express to serve our end points
 const app = express();
@@ -21,5 +23,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 })
+
+JsonDatabase('db.json', app);
 
 app.listen(3000, () => console.log('Listening on port 3000'));

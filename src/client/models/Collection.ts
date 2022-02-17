@@ -43,6 +43,7 @@ export class Collection<T extends Model<K>, K> {
   get trigger() { return this.events.trigger }
 
   add = (model: T) => {
+    if (this.models.find(m => m.get('id' as keyof K) == model.get('id' as keyof K))) return;
     this.models.push(model);
     model.on('save', () => { this.list.render() });
     model.on('delete', () => { this.remove(model) });

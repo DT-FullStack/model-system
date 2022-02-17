@@ -93,9 +93,11 @@ export abstract class Model<T extends HasId> {
     }
     try {
       const result = await this.sync.save(attrs);
+      console.log(result);
       if (!this.get('id')) {
         const { id } = result.data;
         this.set({ id } as T);
+        console.log('no id', this.get('id'), this);
       }
       this.trigger('save');
     } catch (error) {

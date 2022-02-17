@@ -1,51 +1,56 @@
 {
-  "users": [
-    {
-      "name": "David",
-      "age": "50",
-      "id": 2
-    }
-  ],
-  "companies": [
-    {
-      "name": "Imports R Us",
-      "location": "Austin, TX",
-      "mission": "We want to bring it ",
-      "id": 2
-    },
-    {
-      "name": "Apples and Bananas Inc",
-      "location": "Austin, TX",
-      "mission": "Bringing fruit to the people",
-      "id": 3
-    }
-  ],
-  "products": [
-    {
-      "name": "Point of Service",
-      "cost": "500",
-      "type": "software",
-      "id": 1
-    },
-    {
-      "name": "Logo Design",
-      "cost": "1000",
-      "type": "service",
-      "id": 2
-    },
-    {
-      "name": "Hot Cakes",
-      "cost": "4.99",
-      "type": "food product",
-      "id": 3
-    }
-  ],
-  "issues": [
-    {
-      "title": "System malfunction",
-      "description": "It went down hard",
-      "id": 1,
-      "resolved": "true"
-    }
-  ]
+	"users": [
+		{
+			"name": "David",
+			"age": "50",
+			"id": 2
+		},
+		{
+			"name": "Buddy",
+			"age": "67",
+			"id": 3
+		}
+	],
+	"companies": [
+		{
+			"name": "Imports R Us",
+			"location": "Austin, TX",
+			"mission": "We want to bring it ",
+			"id": 2
+		},
+		{
+			"name": "Apples and Bananas Inc",
+			"location": "Austin, TX",
+			"mission": "Bringing fruit to the people",
+			"id": 3
+		}
+	],
+	"products": [
+		{
+			"name": "Point of Service",
+			"cost": "500",
+			"type": "software",
+			"id": 1
+		},
+		{
+			"name": "Logo Design",
+			"cost": "1000",
+			"type": "service",
+			"id": 2
+		},
+		{
+			"name": "Hot Cakes",
+			"cost": "4.99",
+			"type": "food product",
+			"id": 3
+		}
+	],
+	"issues": [
+		{
+			"title": "System malfunction",
+			"description": "It went down hard",
+			"id": 1,
+			"resolved": "true"
+		}
+	]
 }

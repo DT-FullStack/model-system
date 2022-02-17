@@ -83,7 +83,7 @@ export class Product extends Model<ProductProps>{
 
   edit = () => {
     this.formEle.render();
-    const cards = document.querySelectorAll('.user-card');
+    const cards = document.querySelectorAll('.product-card');
     cards.forEach(card => card.className = card.className.split(' ').filter(str => str != 'red').join(' '));
     const card = document.getElementById(`Product${this.get('id')}`);
     console.log(this.get('id'), card);
