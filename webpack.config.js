@@ -34,6 +34,7 @@ const serverConfig = {
     filename: 'server.js',
     path: __dirname
   },
+  mode: "development",
   module: {
     rules: [
       { test: /\.ts$/, use: 'ts-loader' }

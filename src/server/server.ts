@@ -27,7 +27,10 @@ app.get('/', (req, res) => {
 JsonDatabase('db.json', app);
 
 // const port = process.env.PORT || 80;
-const port = () => env.PORT;
+const port = () => {
+  if (!env.HEROKU) return 3000;
+  return env.PORT;
+}
 
 new Promise((resolve) => {
   const waitingForPort = setInterval(() => {
@@ -35,7 +38,7 @@ new Promise((resolve) => {
       clearInterval(waitingForPort);
       resolve(port());
     }
-    console.log(env)
+    console.log({ heroku: env.HEROKU, port: env.PORT })
   }, 1000 * 5)
 }).then(port => {
   app.listen(port, () => console.log(`Listening on port ${port}`));
