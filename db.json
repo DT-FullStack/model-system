@@ -9,6 +9,21 @@
 			"name": "Buddy",
 			"age": "67",
 			"id": 3
+		},
+		{
+			"name": "Joanna",
+			"age": "62",
+			"id": 4
+		},
+		{
+			"name": "Pindar",
+			"age": "27",
+			"id": 5
+		},
+		{
+			"name": "Zoraya",
+			"age": "33",
+			"id": 6
 		}
 	],
 	"companies": [
@@ -23,6 +38,12 @@
 			"location": "Austin, TX",
 			"mission": "Bringing fruit to the people",
 			"id": 3
+		},
+		{
+			"name": "Code Depot",
+			"location": "Austin, TX",
+			"mission": "Make coding more accessible",
+			"id": 4
 		}
 	],
 	"products": [

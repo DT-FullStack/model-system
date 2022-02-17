@@ -45,11 +45,4 @@ export default class JsonDatabaseRoutes {
     this.database.save();
     res.json(item);
   }
-
-
-  // GET      /:collection
-  // POST     /:collection
-  // PUT      /:collection/:id
-  // DELETE   /:collection/:id
-
 }

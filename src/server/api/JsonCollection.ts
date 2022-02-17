@@ -13,7 +13,6 @@ export default class JsonCollection {
   }
   createItem = (data: JsonData): CollectionItem => {
     if (data.id && this.findItem(data.id)) throw new Error(`Item with ID = ${data.id} already exists`);
-    console.log(this.array);
     const item = { ...data, id: this.nextId };
     this.array.push(item);
     return item;

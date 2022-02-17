@@ -38,7 +38,6 @@ new Promise((resolve) => {
       clearInterval(waitingForPort);
       resolve(port());
     }
-    console.log({ heroku: env.HEROKU, port: env.PORT })
   }, 1000 * 5)
 }).then(port => {
   app.listen(port, () => console.log(`Listening on port ${port}`));

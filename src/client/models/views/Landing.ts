@@ -12,26 +12,32 @@ export class Landing {
   }
   details: DetailCard[] = [
     {
-      header: 'Json Server', meta: 'Ready made RESTful interface',
-      description: ['An ExpressJS package that creates a server with RESTful routing for any collection stored in the designated JSON file']
+      header: 'Json Server', meta: 'Express + Typescript',
+      description: ['A custom API that serves a JSON file as a database', "Ultra lightweight and simple, without MySQL or MongoDB"]
     },
     {
-      header: 'Zero JavaScript Frameworks',
-      meta: 'Basic TypeScript only',
-      description: [`Doesn't rely on React or Angular, simply renders templates directly in the DOM`]
-    }
+      header: 'HTML Templating',
+      meta: 'Axios + Typescript',
+      description: [`Dynamically renders collections without a front-end framework`, `Implements abstract classes and generic Typescript classes`]
+    },
+    {
+      header: 'Event Handling',
+      meta: 'Typescript utility class',
+      description: [`Allows fully customizable events`, `Handles both UI and API events, such as click, submit, save, etc`, `Can be used with any other Javascript class`]
+    },
   ]
 
   get template(): string {
     return `
     <h2>Project Highlights</h2>
     <div class='ui basic segment'>
+      <p>This is a super lightweight project that is completely built from scratch using just Express, Axios, and Webpack</p>
       <div class='ui cards'>
         ${this.details.map(detail => `
           <div class='ui blue card'>
             <div class='content'>
               <div class='header'>${detail.header}</div>
-              ${detail.meta && `<div class='meta'>${detail.meta}</div>`}
+              ${detail.meta ? `<div class='meta'>${detail.meta}</div>` : ''}
               <div class='description'>
                 ${detail.description.map(desc => `<p>${desc}</p>`).join('')}
               </div>
