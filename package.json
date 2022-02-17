@@ -12,7 +12,6 @@
     "watch": "npx webpack --watch",
     "start": "node server.js",
     "build": "npx webpack --mode=production",
-    "heroku-postbuild": "NODE_ENV='development' && npx webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

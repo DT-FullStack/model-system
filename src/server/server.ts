@@ -25,13 +25,27 @@ app.get('/', (req, res) => {
 
 JsonDatabase('db.json', app);
 
-const port = process.env.PORT || 80;
-// const port = () => process.env.PORT || 80;
+// const port = process.env.PORT || 80;
+const port = () => process.env.PORT;
+
+new Promise((resolve) => {
+  const waitingForPort = setInterval(() => {
+    if (port()) {
+      clearInterval(waitingForPort);
+      resolve(port());
+    }
+  }, 100)
+}).then(port => {
+  app.listen(port, () => console.log(`Listening on port ${port}`));
+
+})
+
+
 // let port: any = process.env.PORT;
 // if (port == null || port == "") {
 //   port = 8000;
 // }
 
-console.log({ port, env: process.env });
+// console.log({ port: port(), env: process.env });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+// app.listen(port(), () => console.log(`Listening on port ${port()}`));
