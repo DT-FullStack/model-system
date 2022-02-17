@@ -7,7 +7,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';
 import JsonDatabase from './api/JsonDatabase';
-// import JsonDatabaseRouter from './api/JsonDatabaseRoutes';
 
 // create an instance of express to serve our end points
 const app = express();
@@ -26,4 +25,6 @@ app.get('/', (req, res) => {
 
 JsonDatabase('db.json', app);
 
-app.listen(3000, () => console.log('Listening on port 3000'));
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => console.log(`Listening on port ${port}`));
