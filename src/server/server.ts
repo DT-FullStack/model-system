@@ -25,12 +25,12 @@ app.get('/', (req, res) => {
 
 JsonDatabase('db.json', app);
 
-// const port = process.env.PORT || 80;
+const port = process.env.PORT || 80;
 // const port = () => process.env.PORT || 80;
-let port: any = process.env.PORT;
-if (port == null || port == "") {
-  port = 8000;
-}
+// let port: any = process.env.PORT;
+// if (port == null || port == "") {
+//   port = 8000;
+// }
 
 console.log({ port, env: process.env });
 

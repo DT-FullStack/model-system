@@ -1,11 +1,12 @@
 const path = require('path');
 const nodePolyfill = require('node-polyfill-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+import { EnvironmentPlugin } from 'webpack';
 
 // For inclusion in any Node.js webpack config
 const nodeOptions = {
   target: 'node',
-  plugins: [new nodePolyfill()],
+  plugins: [new nodePolyfill(), new EnvironmentPlugin(['PORT', 'NODE_ENV'])],
   externals: [nodeExternals()],
 };
 
