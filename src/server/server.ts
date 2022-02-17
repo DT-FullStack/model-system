@@ -39,15 +39,4 @@ new Promise((resolve) => {
   }, 1000 * 5)
 }).then(port => {
   app.listen(port, () => console.log(`Listening on port ${port}`));
-
 })
-
-
-// let port: any = process.env.PORT;
-// if (port == null || port == "") {
-//   port = 8000;
-// }
-
-// console.log({ port: port(), env: process.env });
-
-// app.listen(port(), () => console.log(`Listening on port ${port()}`));
