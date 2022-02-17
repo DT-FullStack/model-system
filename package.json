@@ -2,6 +2,7 @@
   "name": "model-system",
   "version": "1.0.0",
   "description": "Collections",
+  "main": "server.js",
   "private": true,
   "targets": {
     "default": {
@@ -13,10 +14,8 @@
   },
   "scripts": {
     "watch": "npx webpack --watch",
-    "start:compile": "npx webpack --watch",
-    "start:server": "nodemon server.js",
-    "start": "concurrently npm:start:*",
-    "build": "npx webpack --mode=production && node server.js",
+    "start": "node server.js",
+    "build": "npx webpack --mode=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
