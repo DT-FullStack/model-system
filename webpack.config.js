@@ -1,12 +1,14 @@
 const path = require('path');
 const nodePolyfill = require('node-polyfill-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-import { EnvironmentPlugin } from 'webpack';
+const webpack = require('webpack');
+const EnvironmentPlugin = webpack.EnvironmentPlugin;
+// import { EnvironmentPlugin } from 'webpack';
 
 // For inclusion in any Node.js webpack config
 const nodeOptions = {
   target: 'node',
-  plugins: [new nodePolyfill(), new EnvironmentPlugin(['PORT', 'NODE_ENV'])],
+  plugins: [new nodePolyfill(), new EnvironmentPlugin({ PORT: 3000 })],
   externals: [nodeExternals()],
 };
 
@@ -36,8 +38,6 @@ const serverConfig = {
     path: __dirname
   },
   mode: "development",
-  // plugins: [new nodePolyfill()],
-  // externals: [nodeExternals()],
   module: {
     rules: [
       { test: /\.ts$/, use: 'ts-loader' }
