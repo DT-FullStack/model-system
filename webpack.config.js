@@ -8,7 +8,7 @@ const EnvironmentPlugin = webpack.EnvironmentPlugin;
 // For inclusion in any Node.js webpack config
 const nodeOptions = {
   target: 'node',
-  plugins: [new nodePolyfill(), new EnvironmentPlugin({ PORT: 3000 })],
+  plugins: [new nodePolyfill()],
   externals: [nodeExternals()],
 };
 
