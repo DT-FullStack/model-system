@@ -25,6 +25,8 @@ app.get('/', (req, res) => {
 
 JsonDatabase('db.json', app);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 80;
+
+console.log({ port });
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
